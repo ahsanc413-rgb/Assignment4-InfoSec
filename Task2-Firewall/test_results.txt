@@ -1,0 +1,86 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261108223241
+Username: LAPTOP-USUHMS3Q\ahsan
+RunAs User: LAPTOP-USUHMS3Q\ahsan
+Configuration Name: 
+Machine: LAPTOP-USUHMS3Q (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\2_test_rules.ps1
+Process ID: 10796
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+===== Rules currently applied =====
+
+DisplayName                              Direction Action Enabled
+-----------                              --------- ------ -------
+A4 Rule1 - Block Inbound Telnet (TCP 23)   Inbound  Block    True
+A4 Rule2 - Allow Localhost to TCP 8080     Inbound  Allow    True
+
+
+
+===== TEST Rule 2: localhost access to port 8080 =====
+127.0.0.1 -> port 8080  TcpTestSucceeded = True   (expected: True)
+
+===== TEST Rule 1: Telnet (port 23) from another host =====
+Host IP: 192.168.56.1
+docker : Unable to find image 'busybox:latest' locally
+At C:\Users\ahsan\OneDrive\Desktop\Assignment4-InfoSec\Task2-Firewall\2_test_rules.ps1:29 char:5
++     docker run --rm busybox sh -c "for i in 1 2 3; do nc -zv -w 3 $ho ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Unable to find ...latest' locally:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+latest: Pulling from library/busybox
+37bb94b0940b: Pulling fs layer
+37bb94b0940b: Download complete
+37bb94b0940b: Pull complete
+Digest: sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
+Status: Downloaded newer image for busybox:latest
+docker : Unable to find image 'busybox:latest' locally
+At C:\Users\ahsan\OneDrive\Desktop\Assignment4-InfoSec\Task2-Firewall\2_test_rules.ps1:29 char:5
++     docker run --rm busybox sh -c "for i in 1 2 3; do nc -zv -w 3 $ho ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Unable to find ...latest' locally:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+latest: Pulling from library/busybox
+37bb94b0940b: Pulling fs layer
+37bb94b0940b: Download complete
+37bb94b0940b: Pull complete
+Digest: sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
+Status: Downloaded newer image for busybox:latest
+PING 192.168.56.1 (192.168.56.1): 56 data bytes
+64 bytes from 192.168.56.1: seq=0 ttl=63 time=4.365 ms
+64 bytes from 192.168.56.1: seq=1 ttl=63 time=1.440 ms
+
+--- 192.168.56.1 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 1.440/2.902/4.365 ms
+(expected: port 23 connection timed out / failed = BLOCKED)
+
+===== TEST Rule 3: Dropped packets in firewall log =====
+Log file: C:\windows\System32\LogFiles\Firewall\pfirewall.log
+--- Last DROP entries for port 23 ---
+--- Last 10 DROP entries (any) ---
+2026-11-08 22:31:51 DROP UDP 10.34.241.203 224.0.0.251 5353 5353 105 - - - - - - - RECEIVE 6904
+2026-11-08 22:31:51 DROP UDP fe80::c01d:53ff:fe50:6db4 ff02::fb 5353 5353 125 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:11 DROP UDP 10.34.241.203 224.0.0.251 5353 5353 105 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:11 DROP UDP fe80::c01d:53ff:fe50:6db4 ff02::fb 5353 5353 125 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:31 DROP UDP 10.34.241.203 224.0.0.251 5353 5353 105 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:31 DROP UDP fe80::c01d:53ff:fe50:6db4 ff02::fb 5353 5353 125 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:51 DROP UDP 10.34.241.203 224.0.0.251 5353 5353 105 - - - - - - - RECEIVE 6904
+2026-11-08 22:32:51 DROP UDP fe80::c01d:53ff:fe50:6db4 ff02::fb 5353 5353 125 - - - - - - - RECEIVE 6904
+2026-11-08 22:33:11 DROP UDP 10.34.241.203 224.0.0.251 5353 5353 105 - - - - - - - RECEIVE 6904
+2026-11-08 22:33:11 DROP UDP fe80::c01d:53ff:fe50:6db4 ff02::fb 5353 5353 125 - - - - - - - RECEIVE 6904
+**********************
+Windows PowerShell transcript end
+End time: 20261108223332
+**********************

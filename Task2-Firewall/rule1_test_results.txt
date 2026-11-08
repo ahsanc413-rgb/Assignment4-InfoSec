@@ -1,0 +1,12 @@
+Rule 1 test - 2026-11-08 22:38
+Remote host: WSL2 virtual machine 172.30.147.71 -> Windows host 172.30.144.1 (vEthernet WSL, Hyper-V firewall)
+Listener: Python 3.12 (has an inbound ALLOW rule) listening on 0.0.0.0:23 and 0.0.0.0:2323
+
+[Windows] local check: 127.0.0.1:23 listening = True
+[WSL VM] nc -zv -w 5 172.30.144.1 23   -> Operation timed out  => BLOCKED by 'A4 Rule1 - Block Inbound Telnet (TCP 23)'
+[WSL VM] nc -zv -w 5 172.30.144.1 2323 -> open                 => ALLOWED (control test, no block rule)
+
+[listener] Python312 listening on 0.0.0.0:23
+[listener] Python312 listening on 0.0.0.0:2323
+[listener] port 23: ACCEPTED connection from 127.0.0.1
+[listener] port 2323: ACCEPTED connection from 172.30.147.71
